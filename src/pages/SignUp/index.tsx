@@ -19,6 +19,7 @@ import { Container, Content, AnimationContainer, Background } from './styles';
 
 interface SignUpFormData {
   name: string;
+  username: string;
   email: string;
   password: string;
 }
@@ -35,10 +36,13 @@ const SignUp: React.FC = () => {
 
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
+          username: Yup.string()
+            .required('Nome de usuário obrigatório')
+            .min(4, 'No mínimo 4 dígitos'),
           email: Yup.string()
             .required('E-mail obrigatório')
             .email('Digite um e-mail válido'),
-          password: Yup.string().min(6, 'No mínimo 6 digitos'),
+          password: Yup.string().min(6, 'No mínimo 6 dígitos'),
         });
 
         await schema.validate(data, {
@@ -84,6 +88,11 @@ const SignUp: React.FC = () => {
             <h1>Faça seu Cadastro</h1>
 
             <Input name="name" icon={FiUser} placeholder="Nome" />
+            <Input
+              name="username"
+              icon={FiUser}
+              placeholder="Nome de usuário"
+            />
             <Input name="email" icon={FiMail} placeholder="E-mail" />
             <Input
               name="password"
